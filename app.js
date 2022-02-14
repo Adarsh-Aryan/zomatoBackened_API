@@ -28,15 +28,7 @@ app.get('/location',(req,res) => {
     })
 })
 
-//RestaurantData as per location
-/*app.get('/RestaurantData/:id',(req,res) => {
-    let restId  = Number(req.params.id)
-    console.log(">>>>restId",restId)
-    db.collection('RestaurantData').find({state_id:restId}).toArray((err,result) =>{
-        if(err) throw err;
-        res.send(result)
-    })
-})*/
+
 app.get('/restaurants',(req,res) => {
     let stateId  = Number(req.query.state_id)
     let mealId = Number(req.query.meal_id)
@@ -146,15 +138,16 @@ app.post('/placeOrder',(req,res) => {
 })
 
 app.post('/menuItem',(req,res) => {
-    console.log(req.body)
+    
     db.collection('RestaurantMenu').find({menu_id:{$in:req.body}}).toArray((err,result) =>{
         if(err) throw err;
         res.send(result)
     })
 })
 
-app.delete('/deleteOrder',(req,res) => {
-    db.collection('orders').remove({},(err,result) =>{
+app.delete('/deleteOrder/:id',(req,res) => {
+    let orderId=mongo.ObjectId(req.params.id)
+    db.collection('orders').remove({_id:orderId},(err,result) =>{
         if(err) throw err;
         res.send(result)
     })
