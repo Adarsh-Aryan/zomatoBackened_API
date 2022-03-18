@@ -138,8 +138,10 @@ app.post('/placeOrder',(req,res) => {
 })
 
 app.post('/menuItem',(req,res) => {
+
+    const {userItem}=req.body
     
-    db.collection('RestaurantMenu').find({menu_id:{$in:req.body}}).toArray((err,result) =>{
+    db.collection('RestaurantMenu').find({menu_id:{$in:userItem}}).toArray((err,result) =>{
         if(err) throw err;
         res.send(result)
     })
