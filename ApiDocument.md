@@ -62,7 +62,9 @@ page 4
 page 5
 > list all order
   
-  > https://zomato-villa-api.herokuapp.com/orders?email="aakash@gmail.com"
+  > https://zomato-villa-api.herokuapp.com/orders
+
+  >req.headers.auth-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkYXJzaGFyeWFuQGdtYWlsLmNvbSIsImlhdCI6MTY0Nzc3MTg4M30.SqEDbnij1WSREnvX8UH3qpiGGiYkwc028ubZiYSfDiw
 
 Delete order 
 > https://zomato-villa-api.herokuapp.com/deleteOrder/61ffab62c39f96bf7ba39676
@@ -70,3 +72,22 @@ Delete order
 
  update order
  > https://zomato-villa-api.herokuapp.com/updateOrder/61ffab62c39f96bf7ba39676?status=Success
+
+Register User
+
+>https://zomato-villa-api.herokuapp.com/register
+
+> req.body={
+  email:'ada@gmail.com',
+  name:'Lesnar',
+  password:'12345'
+}
+
+Login User
+
+>https://zomato-villa-api.herokuapp.com/login
+
+> req.body={
+  email:'ada@gmail.com',
+  password:'12345'
+}
