@@ -7,13 +7,17 @@ const mongoUrl = "mongodb+srv://admin-adarsh:adarsh123@cluster0.jshdb.mongodb.ne
 const dotenv = require('dotenv')
 dotenv.config()
 const bodyParser = require('body-parser')
-const cors = require('cors')
-let port = process.env.PORT || 8210;
+const cors = require('cors');
+const { dbConnection } = require('./config/db');
+const { fetchUserEmail } = require('./config/fetchUserEmail');
+let port = process.env.PORT || 6000;
 var db;
-
+dbConnection(mongoUrl)
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.json())
 app.use(cors())
+
+app.use('/',require('./routes/auth'))
 
 //get 
 app.get('/',(req,res) => {
@@ -116,13 +120,10 @@ app.get('/menu/:id',(req,res) => {
 // menu on basis of user selection>> Todo
 
 // get orders
-app.get('/orders',(req,res) => {
-    let email  = req.query.email
-    let query = {};
-    if(email){
-        query = {"email":email}
-    }
-    db.collection('orders').find(query).toArray((err,result) =>{
+app.get('/orders',fetchUserEmail,(req,res) => {
+    
+    
+    db.collection('orders').find({email:req.email}).toArray((err,result) =>{
         if(err) throw err;
         res.send(result)
     })
@@ -144,6 +145,8 @@ app.post('/menuItem',(req,res) => {
     db.collection('RestaurantMenu').find({menu_id:{$in:userItem}}).toArray((err,result) =>{
         if(err) throw err;
         res.send(result)
+
+
     })
 })
 
